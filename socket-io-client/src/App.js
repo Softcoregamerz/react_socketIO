@@ -10,6 +10,10 @@ function App() {
     socket.on("FromAPI", data => {
       setResponse(data);
     });
+
+    // CLEAN UP THE EFFECT
+    return () => socket.disconnect();
+    //
   }, []);
 
   return (
