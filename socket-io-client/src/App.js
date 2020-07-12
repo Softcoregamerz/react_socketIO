@@ -3,12 +3,12 @@ import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:4001";
 
 function App() {
-  const [response, setResponse] = useState("");
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
     socket.on("FromAPI", data => {
-      setResponse(data);
+      setNotifications(oldNotifications => [data, ...oldNotifications]);
     });
 
     // CLEAN UP THE EFFECT
@@ -18,7 +18,8 @@ function App() {
 
   return (
     <p>
-      It's <time dateTime={response}>{response}</time>
+      <div>Notifications:</div>
+      {notifications.map((notification) => <div>{notification}</div>)}
     </p>
   );
 }

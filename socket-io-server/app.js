@@ -19,7 +19,7 @@ io.on("connection", (socket) => {
   if (interval) {
     clearInterval(interval);
   }
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
+  interval = setInterval(() => getApiAndEmit(socket), 5000);
   socket.on("disconnect", () => {
     console.log("Client disconnected");
     clearInterval(interval);
@@ -27,7 +27,11 @@ io.on("connection", (socket) => {
 });
 
 const getApiAndEmit = socket => {
-  const response = new Date();
+
+  const randomUser = `User #${Math.floor(Math.random() * 10000)}`;
+  const randomWatchlist = `Watchlist #${Math.floor(Math.random() * 10000)}`
+
+  const response = `${randomUser} has liked your ${randomWatchlist}`;
   // Emitting a new message. Will be consumed by the client
   socket.emit("FromAPI", response);
 };
